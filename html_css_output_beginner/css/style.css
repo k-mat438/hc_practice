@@ -1,0 +1,172 @@
+@charset "utf-8";
+/* iphone用の設定*/
+body {
+    font-family: "system-ui", "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+}
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 600px auto auto;
+}
+
+.header_inner {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin: 10px auto;
+}
+
+.header_inner h2 {
+    color: #fff;
+    background-color: #324353;
+    margin-left: 8%;
+    width: 94px;
+    text-align: center;
+    font-size: 1.5em;
+    padding: 7px 12px;
+}
+
+.header_inner ul {
+    width: 195px;
+    font-size: 0.95em;
+    display: flex;
+    justify-content: space-between;
+    list-style-type: none;
+    margin-right: 3%;
+    font-weight: 200;
+}
+
+.header_inner ul li {
+    padding: 0 5px;
+    padding-top: 10px;
+}
+
+.TopPhoto img{
+    height: 600px;
+    width: 100%;
+    object-fit: cover; 
+}
+
+.main {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.main .self, main .profile {
+    text-align: center;
+    margin-top: 100px;
+    padding: 0 4% 0 4%;
+    margin-bottom: 100px;
+}
+.main .self h1 {
+    height: 45px;
+    border-bottom: 1px solid #676262;
+    font-size: 2.3em;
+    display: inline-block;
+    margin: 0 auto;
+    padding-bottom: 5px;
+}
+.main .self h4 {
+    margin-top: 80px;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+.main .self .self_text {
+    font-size: 18px;
+    line-height: 25px;
+    margin-bottom: 15px;
+    letter-spacing: 1px;
+    text-align: left;
+    font-weight: 200;
+}
+.self_img img{
+    border-radius: 50%;
+    width: 115px;
+    height: 115px
+}
+.main .profile h1 {
+    border-bottom: 1px solid #676262;
+    font-size: 2.0em;
+    font-weight: 600;
+    display: inline-block;
+    margin: 50px auto;
+    padding-bottom: 8px;
+}
+
+.main .profile .profile_title {
+    font-size: 1.1em;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.main .profile .profile_text {
+    margin-bottom: 15px;
+}
+
+.profile_img  img {
+    width: 100%;
+}
+.profile {
+    margin-bottom: 30px;
+}
+
+footer {
+    font-size: 0.7em;
+    font-weight: 300;
+    margin-bottom: 10px;
+    text-align: center;
+}
+/* PC用の設定*/
+@media screen and (min-width: 600px) {
+
+    .header_inner {
+        max-width: 960px;
+    }
+
+    .main {
+        max-width: 960px;
+    }
+    .main .self {
+        display: grid;
+        grid-template-columns: 5fr 1fr;
+        grid-template-rows: 80px 55px 75px;
+        margin: 100px auto 80px auto;
+    }
+    .main .self h1 {
+        grid-column: 1 / 3;
+        grid-row: 1 / 2;
+        margin-bottom: 30px;
+    }
+    .main .self h4 {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+        text-align: left;
+        margin-top: 0;
+        margin-bottom: 0;
+        padding-top: 15px;
+        padding-left: 80px;
+    }
+
+    .main .self .self_text {
+        grid-column: 1 / 2;
+        grid-row: 3 / 4;
+        margin-bottom: 0;
+        padding-left: 80px;
+    }
+
+    .main .self_img img{
+        padding-top: 10px;
+        grid-column: 2 / 3;
+        grid-row: 2 / 4;
+    }
+
+    
+    .main .profile {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0 10px;
+    }
+    .main .profile h1 {
+        grid-column: 1 / 4;
+    }
+}

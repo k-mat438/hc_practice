@@ -26,17 +26,13 @@ week = ''
   day = Date.new(today.year, today.mon, i)
   wd = day.wday - 1
   if wd == -1
-    week += if i < 10
-              " #{i}"
-            else
-              i.to_s
-            end
+    week += i.to_s.rjust(2)
     puts week.rjust(20)
     week = ''
   elsif i < 10
-    week += " #{i} "
+    week += i.to_s.center(3)
   else
-    week += "#{i} "
+    week += i.to_s.ljust(3)
   end
 end
 puts week unless week.empty?

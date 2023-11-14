@@ -13,10 +13,7 @@ class Suica
   end
   # 1.2,1.3 100円以上の任意の金額をチャージ、100円未満は例外
   def charge(yen)
-    if yen >= 100
-      @deposit += yen
-    else
-      raise '100円以上を入金してください'
-    end
+    raise '100円以上を入金してください' if yen < 100
+    @deposit += yen
   end
 end

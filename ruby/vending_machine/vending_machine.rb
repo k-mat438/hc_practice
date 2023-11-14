@@ -21,7 +21,7 @@ class Vending
     self.stock.map {|key, value| [key, value].join(':')}
   end
   # 4.2 購入可能リスト
-  def able_to_buy
+  def purchasable
     x = stock.delete_if {|key, value| value == 0}
     puts '購入可能商品は,'
     x.map {|key, value| key}
@@ -37,23 +37,58 @@ class Vending
   end
 
   # 3.1 3.2 3.3 飲み物を買えるかどうか
-  def buy(drink,card)
-    # 飲み物がリストにあるか
-    drink_name = drink.to_sym
-    if stock.has_key?(drink_name)
-      # 飲み物の在庫があるかどうか
-      if self.stock[drink_name] > 0 && card.deposit >= @drink_table[drink_name][:price]
-        @drink_table[drink_name][:drinks].pop
-        @total_sales += @drink_table[drink_name][:price]
-        card.deposit = card.deposit - @drink_table[drink_name][:price]
-        "残高は#{card.deposit}円です"
-      else
-        raise "#{drink_name}は買えません"
-      end
-    # 飲み物がリストにない
+  def exist_drink(drink)
+    if stock.has_key?(drink)
+      true
     else
-      raise "#{stock.keys.join(', ')}から選んでください"
+      raise "ジュースが存在しません。"
     end
   end
+
+  def exist_stock(drink)
+    if self.stock[drink] > 0
+      true
+    else
+      raise "在庫がありません。"
+    end
+  end
+
+  def check_deposit(drink, card)
+    if card.deposit >= @drink_table[drink][:price]
+      true
+    else
+      raise "残高が足りません"
+    end
+  end
+
+  def purchase(drink, card)
+    drink_name = drink.to_sym
+    self.exist_drink(drink_name)
+    self.exist_stock(drink_name)
+    self.check_deposit(drink_name,card)
+    @drink_table[drink_name][:drinks].pop
+    @total_sales += @drink_table[drink_name][:price]
+    card.deposit = card.deposit - @drink_table[drink_name][:price]
+    "残高は#{card.deposit}円です"
+  end
+
+  # def buy(drink,card)
+  #   # 飲み物がリストにあるか
+  #   drink_name = drink.to_sym
+  #   if stock.has_key?(drink_name)
+  #     # 飲み物の在庫があるかどうか
+  #     if self.stock[drink_name] > 0 && card.deposit >= @drink_table[drink_name][:price]
+  #       @drink_table[drink_name][:drinks].pop
+  #       @total_sales += @drink_table[drink_name][:price]
+  #       card.deposit = card.deposit - @drink_table[drink_name][:price]
+  #       "残高は#{card.deposit}円です"
+  #     else
+  #       raise "#{drink_name}は買えません"
+  #     end
+  #   # 飲み物がリストにない
+  #   else
+  #     raise "#{stock.keys.join(', ')}から選んでください"
+  #   end
+  # end
 
 end

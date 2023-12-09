@@ -1,0 +1,84 @@
+[users]
+  *user_id {label: "bigint, not null"}
+  full_name {label: "varchar, null"}
+  email {label: "varchar, not null, uniq" }
+  phone_number {label: "varchar, not null, uniq"}
+  self_introduction {label: "varchar, not null"}
+  locate {label: "varchar, not null"}
+  website {label: "varchar"}
+  birth {label: "datatime"}
+  profile_image {label: "image, not null"}
+  avatar_image {label: "image, not null"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, not null"}
+
+[posts] {bgcolor: "#FFccFF"}
+  *post_id {label: "bigint, not null"}
+  content {label: "varchar, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, not null"}
+
+[favorites] {bgcolor: "#d0e0d0"}
+  *favorite_id {label: "bigint, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
+  post_id {label: "bigint, not null, FK(posts)"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, not null"}
+
+[reposts] {bgcolor: "#d0e0d0"}
+  *repost_id {label: "bigint, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
+  post_id {label: "bigint, not null, FK(posts)"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, not null"}
+
+[bookmarks] {bgcolor: "#d0e0d0"}
+  *bookmark_id {label: "bigint, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
+  post_id {label: "bigint, not null, FK(posts)"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, not null"}
+
+
+[follows] {bgcolor: "#FFccFF"}
+  *follow_id {label: "bigint, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, not null"}
+
+[d_messages] {bgcolor: "#d0e0d0"}
+  *d_message_id {label: "bigint, not null"}
+  follow_id {label: "bigint, not null, FK(follows)"}
+  user_id {label: "bigint, not null, FK(users)"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, not null"}
+
+[notices] {bgcolor: "#FFFFCC"}
+  *notice_id {label: "bigint, not null"}
+  follow_id {label: "bigint, not null, FK(follows)"}
+  favorite_id {label: "bigint, not null, FK(favorites)"}
+  created_at { label: "datatime, not null"}
+  updated_at { label: "datatime, not null"}
+
+
+# Cardinality    Syntax
+# 0 or 1         ?
+# exactly 1      1
+# 0 or more      *
+# 1 or more      +
+users 1--* `posts`
+users 1--* `favorites`
+users 1--* `reposts`
+users 1--* `bookmarks`
+users 1--* `follows`
+users 1--* `d_messages`
+
+posts ?--? `favorites`
+posts ?--? `reposts`
+posts ?--? `bookmarks`
+
+follows ?--? `d_messages`
+follows ?--? `notices`
+
+favorites ?--? `notices`

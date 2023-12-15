@@ -12,53 +12,53 @@
   created_at { label: "datatime, not null"}
   updated_at { label: "datatime, not null"}
 
-[posts] {bgcolor: "#FFccFF"}
+[posts] {bgcolor: "#d0e0d0"}
   *id {label: "bigint, not null"}
   user_id {label: "bigint, not null, FK(users)"}
-  content {label: "varchar, not null"}
+  content {label: "varchar(140), not null"}
   created_at { label: "datatime, not null"}
   updated_at { label: "datatime, not null"}
 
 [favorites] {bgcolor: "#d0e0d0"}
   *id {label: "bigint, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
   post_id {label: "bigint, not null, FK(posts)"}
   created_at { label: "datatime, not null"}
   updated_at { label: "datatime, not null"}
 
 [reposts] {bgcolor: "#d0e0d0"}
   *id {label: "bigint, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
   post_id {label: "bigint, not null, FK(posts)"}
   created_at { label: "datatime, not null"}
   updated_at { label: "datatime, not null"}
 
 [bookmarks] {bgcolor: "#d0e0d0"}
   *id {label: "bigint, not null"}
+  user_id {label: "bigint, not null, FK(users)"}
   post_id {label: "bigint, not null, FK(posts)"}
   created_at { label: "datatime, not null"}
   updated_at { label: "datatime, not null"}
 
-[follows] {bgcolor: "#FFccFF"}
+[relationships] {bgcolor: "#d0e0d0"}
   *id {label: "bigint, not null"}
-  user_id {label: "bigint, not null, FK(users)"}
-  created_at { label: "datatime, not null"}
-  updated_at { label: "datatime, not null"}
-
-[followers] {bgcolor: "#FFccFF"}
-  *id {label: "bigint, not null"}
-  user_id {label: "bigint, not null, FK(users)"}
+  follow_id {label: "bigint, not null, FK(users)"}
+  follower_id {label: "bigint, not null, FK(users)"}
   created_at { label: "datatime, not null"}
   updated_at { label: "datatime, not null"}
 
 [direct_messages] {bgcolor: "#d0e0d0"}
   *id {label: "bigint, not null"}
-  follow_id {label: "bigint, not null, FK(follows)"}
-  follower_id {label: "bigint, not null, FK(followers)"}
+  user_id {label: "bigint, not null, FK(users)"}
+  receive_user_id {label: "bigint, not null, FK(users)"}
+  message {label: "varchar, not null"}
   created_at { label: "datatime, not null"}
   updated_at { label: "datatime, not null"}
 
 [notices] {bgcolor: "#FFFFCC"}
   *id {label: "bigint, not null"}
-  follower_id {label: "bigint, not null, FK(followers)"}
+  user_id {label: "bigint, not null, FK(users)"}
+  follower_id {label: "bigint, not null, FK(relationships)"}
   favorite_id {label: "bigint, not null, FK(favorites)"}
   created_at { label: "datatime, not null"}
   updated_at { label: "datatime, not null"}
@@ -70,17 +70,17 @@
 # 0 or more      *
 # 1 or more      +
 users 1--* `posts`
-users 1--* `follows`
-users 1--* 'followers'
+users 1--* `favorites`
+users 1--* `reposts`
+users 1--* `direct_messages`
+users 1--* `notices`
+users 1--* `relationships`
+users 1--* `bookmarks`
 
+posts ?--* `favorites`
+posts ?--* `reposts`
+posts ?--* `bookmarks`
 
-posts ?--? `favorites`
-posts ?--? `reposts`
-posts ?--? `bookmarks`
-
-followers ?--? `notices`
-followers ?--? `direct_messages`
-
-follows ?--? `direct_messages`
+relationships ?--? `notices`
 
 favorites ?--? `notices`
